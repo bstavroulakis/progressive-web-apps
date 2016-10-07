@@ -2,9 +2,14 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
     var apiUrlPath = 'https://bstavroulakis.com/pluralsight/courses/progressive-web-apps/service/';
     var apiUrlLatest = apiUrlPath + 'latest-deals.php';
     var apiUrlCar = apiUrlPath + 'car.php?carId=';
+    var firstLoad = true;
 
     function offlineFirstStrategy(){
         clientStorage.getCars().then(function(cars){
+            if(firstLoad){
+                document.querySelector('.mdl-grid').innerHTML = "";
+                firstLoad = false;
+            }
             if(cars.length == 0){
                 fetchCarsAndCache();
             }else{
