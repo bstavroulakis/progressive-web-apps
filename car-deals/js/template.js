@@ -1,4 +1,5 @@
 define([], function(){
+    var firstLoad = true;
 
     function generateCarCard(car){
       var template = document.querySelector('#car-card').innerHTML;
@@ -11,6 +12,10 @@ define([], function(){
     };
 
     function appendCars(cars){
+        if(firstLoad){
+            document.querySelector('.mdl-grid').innerHTML = "";
+            firstLoad = false;
+        }
         var cardHTML = "";
         for(var i = 0; i < cars.length; i++){
             cardHTML += generateCarCard(cars[i]);
