@@ -35,6 +35,7 @@ var carPath = '/pluralsight/courses/progressive-web-apps/service/car.php';
 //Installing
 //Pre-cache App Shell
 self.addEventListener('install', function(event) {
+  console.log("From SW: Install Event");
   self.skipWaiting();
   event.waitUntil(
     caches.open(carDealsCacheName)
@@ -47,6 +48,7 @@ self.addEventListener('install', function(event) {
 //Activating
 //Clean up
 self.addEventListener('activate', function(event) {
+  console.log("From SW: Activate Event");
   self.clients.claim();
   event.waitUntil(
     caches.keys()

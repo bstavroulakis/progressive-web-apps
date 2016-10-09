@@ -41,6 +41,8 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
             return response.text();
         }).then(function(data){
             document.body.insertAdjacentHTML('beforeend', data);
+        }).catch(function(){
+            alert("Oops, can't retrieve page");
         });
     }
 
