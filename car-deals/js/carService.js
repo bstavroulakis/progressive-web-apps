@@ -3,51 +3,36 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
     var apiUrlLatest = apiUrlPath + 'latest-deals.php';
     var apiUrlCar = apiUrlPath + 'car.php?carId=';
 
-    function offlineFirstStrategy(){
-        clientStorage.getCars().then(function(cars){
-            if(cars.length == 0){
-                fetchCarsAndCache();
-            }else{
-                template.appendCars(cars);
-                refreshLoadTime();
-            }
+    function loadMoreRequest(){
+        fetchPromise()
+        .then(function(status){
+            document.getElementById("connection-status").innerHTML = status;
+            loadMore();
         });
     }
-    
-    function fetchCarsAndCache(){
-        //This could implement a timeout fix for LieFie connections
-        fetch(apiUrlLatest + '?carId=' + clientStorage.getLastCarId())
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            clientStorage.addCars(data.cars).then(function(){
-                loadMore();
+
+    function fetchPromise(){
+        return new Promise(function(resolve, reject){
+            fetch(apiUrlLatest + '?carId=' + clientStorage.getLastCarId())
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data){
+                clientStorage.addCars(data.cars).then(function(){
+                    data.cars.forEach(preCacheDetailsPage);
+                    resolve("The connection is fast, showing latest results");
+                });
+            }).catch(function(e){
+                resolve("No connection, showing offline results");
             });
-            data.cars.forEach(preCacheDetailsPage);
-            localforage.setItem('carsLastUpdate', new Date().toLocaleString());
-        }).catch(function(e){
-            loadMore();
+            setTimeout(function(){resolve("The connection is slow, showing offline results")}, 500);
         });
     }
 
     function loadMore(){
         clientStorage.getCars().then(function(cars){
             template.appendCars(cars);
-            refreshLoadTime();
         });
-    }
-
-    function refreshLoadTime(){
-        localforage.getItem('carsLastUpdate', function(err, value){
-            document.querySelector('.last-update').innerHTML = prettyDate(value);
-        });
-    }
-
-    function resetList(){
-        document.querySelector('.mdl-grid').innerHTML = "";
-        clientStorage.resetList();
-        fetchCarsAndCache();
     }
 
     function loadCarPage(carId){
@@ -72,8 +57,6 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
 
     return {
         loadCarPage: loadCarPage,
-        fetchCarsAndCache: fetchCarsAndCache,
-        offlineFirstStrategy: offlineFirstStrategy,
-        resetList: resetList
+        loadMoreRequest: loadMoreRequest
     }
 });

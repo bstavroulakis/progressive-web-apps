@@ -1,5 +1,5 @@
 define([], function(){
-    var lastItemId = null; var limit = 3;
+    var lastItemId = null; var limit = 9;
     var carsInstance = localforage.createInstance({
         name: "cars"
     });
@@ -38,14 +38,9 @@ define([], function(){
         return lastItemId;
     }
 
-    function resetList(){
-        lastItemId = null;
-    }
-
     return {
         addCars:addCars,
         getCars:getCars,
-        getLastCarId:getLastCarId,
-        resetList: resetList
+        getLastCarId:getLastCarId
     };
 });

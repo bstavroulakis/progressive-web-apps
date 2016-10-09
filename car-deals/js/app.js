@@ -7,11 +7,8 @@ document.pageEvents = {
         carService.loadCarPage(carId);
     },
     loadMore: function(){
-        carService.offlineFirstStrategy();
-    },
-    loadNew: function(){
-        carService.resetList();
+        carService.loadMoreRequest();
     }
 }
 
-carService.offlineFirstStrategy();
+carService.loadMoreRequest();

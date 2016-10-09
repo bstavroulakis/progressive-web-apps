@@ -69,17 +69,14 @@
                 <span class="mdl-layout-title">Car Deals</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <button id="renew-deals" onclick="pageEvents.loadNew()" 
-                    class="mdl-button--raised mdl-button--accent mdl-button mdl-js-button mdl-js-ripple-effect">
-                        New Cars
+                    <button class="mdl-button--raised mdl-button--accent mdl-button mdl-js-button mdl-js-ripple-effect"
+                    onclick="location.reload()">
+                        Refresh
                     </button>
                 </nav>
             </div>
         </header>
         <main class="mdl-layout__content">
-            <div class="center">
-                Last Update: <span class="last-update"></span>
-            </div>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col center">
                     <svg fill="#f44336" height="300" viewBox="0 0 24 24" width="300" xmlns="http://www.w3.org/2000/svg">
@@ -97,12 +94,14 @@
                 </button>
             </div>
         </main>
+        <footer>
+            <div id="connection-status" class="center"></div>
+        </footer>
     </div>
 
     <script id="car-card" type="text/template">
         <div class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp" style="background-image: url('{{image}}')"
             onclick="pageEvents.loadCarPage('{{details-id}}')">
-            <div class="mdl-card__title mdl-card--expand"></div>
              <div class="mdl-card__title">
                 <span class="mdl-card__title-text">{{title}} (${{price}})</span>
             </div>
