@@ -1,5 +1,5 @@
 define([], function(){
-    var lastItemId = null; var limit = 9;
+    var lastItemId = null; var limit = 3;
     var carsInstance = localforage.createInstance({
         name: "cars"
     });
