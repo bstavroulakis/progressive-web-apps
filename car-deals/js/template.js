@@ -1,5 +1,4 @@
 define([], function(){
-    var firstLoad = true;
 
     function generateCarCard(car){
       var template = document.querySelector('#car-card').innerHTML;

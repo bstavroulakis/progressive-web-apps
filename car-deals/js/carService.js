@@ -25,7 +25,7 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
             }).catch(function(e){
                 resolve("No connection, showing offline results");
             });
-            setTimeout(function(){resolve("The connection is hanging, showing offline results")}, 1000);
+            setTimeout(function(){resolve("The connection is hanging, showing offline results")}, 3000);
         });
     }
 

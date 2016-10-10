@@ -38,10 +38,9 @@ if ('serviceWorker' in navigator) {
     console.log('Error occurred', error);
   });
   
+  //An extra event that is fired when the service worker controlling this page changes
+  //through the self.skipWaiting()
+  navigator.serviceWorker.addEventListener('controllerchange', function(e){
+    console.log("Controller Changed!");
+  });
 } 
-
-//An extra event that is fired when the service worker controlling this page changes
-//through the self.skipWaiting()
-navigator.serviceWorker.addEventListener('controllerchange', function(e){
-  console.log("Controller Changed!");
-});
