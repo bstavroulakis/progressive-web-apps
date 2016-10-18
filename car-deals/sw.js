@@ -73,6 +73,8 @@ self.addEventListener('fetch', function(event) {
   var fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
 
   if(requestPath == latestPath || fileName == "sw.js"){
+    event.respondWith(fetch(event.request));
+  }else if(requestPath == imagePath){
     event.respondWith(networkFirstStrategy(event.request));
   }else{
     event.respondWith(cacheFirstStrategy(event.request));

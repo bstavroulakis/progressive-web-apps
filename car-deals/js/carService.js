@@ -20,7 +20,7 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
             .then(function(data){
                 clientStorage.addCars(data.cars).then(function(){
                     data.cars.forEach(preCacheDetailsPage);
-                    resolve("The connection is fast, showing latest results");
+                    resolve("The connection responded, showing latest results");
                 });
             }).catch(function(e){
                 resolve("No connection, showing offline results");
