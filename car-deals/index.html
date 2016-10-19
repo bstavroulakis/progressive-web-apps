@@ -99,8 +99,8 @@
     </div>
 
     <script id="car-card" type="text/template">
-        <div class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp" style="background-image: url('{{image}}')"
-            onclick="pageEvents.loadCarPage('{{details-id}}')">
+        <div class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp" id="{{id}}"
+            onclick="pageEvents.loadCarPage('{{id}}')">
              <div class="mdl-card__title">
                 <span class="mdl-card__title-text">{{title}} (${{price}})</span>
             </div>

@@ -13,13 +13,12 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
 
     function fetchPromise(){
         return new Promise(function(resolve, reject){
-            fetch(apiUrlLatest + '?carId=' + clientStorage.getLastCarId())
+            fetch(apiUrlLatest + '?carId=' + clientStorage.getLastCarId() + "&description=1")
             .then(function(response) {
                 return response.json();
             })
             .then(function(data){
                 clientStorage.addCars(data.cars).then(function(){
-                    data.cars.forEach(preCacheDetailsPage);
                     resolve("The connection is OK, showing latest results");
                 });
             }).catch(function(e){
@@ -32,30 +31,66 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
     function loadMore(){
         clientStorage.getCars().then(function(cars){
             template.appendCars(cars);
+            addImages(cars);
         });
+    }
+
+    function addImages(cars){
+        for(var i = 0; i < cars.length; i++){
+            var car = cars[i];
+            (function(car){
+                clientStorage.getCarImage(car.details_id)
+                .then(function(data){
+                    appendImage(car.id, data);
+                }).catch(function(){
+                    fetchImage(car);
+                });
+            }(car));
+        }
+    }
+
+    function fetchImage(car){
+        fetch(car.image.replace("car-image", "car-image-blob")).then(function(response){
+            return response.text();
+        }).then(function(data){
+            clientStorage.addCarImage(car.details_id, data);
+            appendImage(car.id, data);
+        });
+    }
+
+    function appendImage(id, data){
+        document.getElementById(id).style.backgroundImage = "url('data:image/jpeg;base64," + data + "')";
     }
 
     function loadCarPage(carId){
-        fetch(apiUrlCar + carId)
-        .then(function(response){
-            return response.text();
-        }).then(function(data){
-            document.body.insertAdjacentHTML('beforeend', data);
-        }).catch(function(){
-            alert("Oops, can't retrieve page");
-        });
+        clientStorage.getDetailsTemplate()
+        .then(function(data){
+            var template = data;
+            clientStorage.getCar(carId)
+            .then(function(car){
+                template = template.replace("{{title}}", car.brand + " " + car.model + " " + car.year);
+                template = template.replace("{{description}}", car.description);
+                clientStorage.getCarImage(car.details_id)
+                .then(function(data){
+                    template = template.replace("{{image-data}}", data);
+                    document.body.insertAdjacentHTML('beforeend', template);
+                });
+            });
+            
+        })
     }
 
-    function preCacheDetailsPage(car){
-        if ('serviceWorker' in navigator) {
-            var carDetailsUrl = apiUrlCar + car.value.details_id;
-            window.caches.open('carDealsCachePagesV1').then(function(cache) {
-                cache.match(carDetailsUrl).then(function(response){
-                    if(!response) cache.add(new Request(carDetailsUrl));
-                })
-            });
-        }
+    function preCacheDetailsTemplate(){
+        fetch('templates/car-details.html')
+        .then(function(response){
+            return response.text();
+        })
+        .then(function(data){
+            clientStorage.setDetailsTemplate(data);
+        })
     }
+
+    preCacheDetailsTemplate();
 
     return {
         loadCarPage: loadCarPage,

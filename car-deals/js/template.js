@@ -5,7 +5,7 @@ define([], function(){
       var title = car.brand + ' ' + car.model + ' ' + car.year;
       template = template.replace("{{title}}", title);
       template = template.replace('{{details-id}}', car.details_id);
-      template = template.replace('{{image}}', car.image);
+      template = template.replace(/{{id}}/gi, car.id);
       template = template.replace('{{price}}', car.price);
       return template;
     };
