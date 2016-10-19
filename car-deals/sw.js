@@ -73,10 +73,13 @@ self.addEventListener('fetch', function(event) {
   var fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
 
   if(requestPath == latestPath || fileName == "sw.js"){
+    //Network Only Strategy
     event.respondWith(fetch(event.request));
   }else if(requestPath == imagePath){
+    //Network First then Offline Strategy
     event.respondWith(networkFirstStrategy(event.request));
   }else{
+    //Offline First then Network Strategy
     event.respondWith(cacheFirstStrategy(event.request));
   }
 });
