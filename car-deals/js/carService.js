@@ -35,6 +35,15 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
         });
     }
 
+    function fetchImage(car){
+        fetch(car.image.replace("car-image", "car-image-blob")).then(function(response){
+            return response.text();
+        }).then(function(data){
+            clientStorage.addCarImage(car.details_id, data);
+            appendImage(car.id, data);
+        });
+    }
+
     function addImages(cars){
         for(var i = 0; i < cars.length; i++){
             var car = cars[i];
@@ -47,15 +56,6 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
                 });
             }(car));
         }
-    }
-
-    function fetchImage(car){
-        fetch(car.image.replace("car-image", "car-image-blob")).then(function(response){
-            return response.text();
-        }).then(function(data){
-            clientStorage.addCarImage(car.details_id, data);
-            appendImage(car.id, data);
-        });
     }
 
     function appendImage(id, data){
