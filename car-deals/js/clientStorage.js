@@ -21,10 +21,6 @@ define([], function(){
                 if(index ==  0){ resolve([]); return; }
 
                 var keys = keys.splice(index - limit, limit);
-                /*if(lastItemId != null && keys[limit-1] + 1 != lastItemId){
-                    resolve([]);
-                    return;
-                }*/
                 carsInstance.getItems(keys).then(function(results){
                     var returnArr = Object.keys(results).map(function(k) { return results[k] }).reverse();
                     lastItemId = returnArr[returnArr.length-1].id;
