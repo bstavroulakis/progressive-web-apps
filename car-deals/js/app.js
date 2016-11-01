@@ -1,6 +1,5 @@
 var carService = require('./carService.js');
 //var serviceWorker = require('./swRegister.js');
-//var manifest = require('./manifest.js');
 
 window.pageEvents = {
     loadCarPage : function(carId){
