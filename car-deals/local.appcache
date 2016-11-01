@@ -5,7 +5,6 @@ CACHE:
 js/app.js
 js/carService.js
 js/clientStorage.js
-js/manifest.js
 js/swRegister.js
 js/template.js
 resources/es6-promise/es6-promise.js
@@ -19,9 +18,12 @@ resources/material-design-lite/material.min.js.map
 resources/material-design-lite/material.red-indigo.min.css
 resources/systemjs/system.js
 resources/systemjs/system-polyfills.js
+resources/systemjs/system-polyfills.js.map
+resources/systemjs/system-polyfills.src.js
 resources/systemjs/system.js.map
 resources/systemjs/system.src.js
 ./
+index.html
 
 # Resources that require the user to be online.
 NETWORK:
