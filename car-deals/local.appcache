@@ -21,7 +21,6 @@ resources/systemjs/system.js
 resources/systemjs/system-polyfills.js
 resources/systemjs/system.js.map
 resources/systemjs/system.src.js
-resources/pretty.js
 ./
 
 # Resources that require the user to be online.
