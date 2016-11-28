@@ -1,79 +1,76 @@
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The best car deals on the web!">
-    <title>Car Deals</title>
-
-    <link rel="stylesheet" href="resources/material-design-light/material.red-indigo.min.css" />
-    <script src="resources/material-design-light/material.min.js"></script>
-    
-    <style>
-        .center{text-align:center;padding:10px;}
-        .mdl-card{cursor:pointer;color:#ffffff;height:250px;background-size: cover;}
-        .mdl-card__title-text{color:#ffffff;background-color:rgba(0,0,0,0.5);padding:15px;
-            position:absolute;left:0;bottom:0;width:100%;box-sizing: border-box;}
-    </style>
-  </head>
-
-  <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Car Deals</span>
-                <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation">
-                    <button class="mdl-button--raised mdl-button--accent mdl-button mdl-js-button mdl-js-ripple-effect">
-                        Refresh
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="The best car deals on the web!">
+        <title>Car Deals</title>
+        <link rel="stylesheet" 
+              href="resources/material-design-light/material.red-indigo.min.css" />
+        <script src="resources/material-design-light/material.min.js"></script>
+        <style>
+            .center{text-align:center;padding:10px;}
+            .mdl-card{cursor:pointer;color:#ffffff;height:250px;background-size: cover;}
+            .mdl-card__title-text{color:#ffffff;background-color:rgba(0,0,0,0.5);padding:15px;
+                position:absolute;left:0;bottom:0;width:100%;box-sizing: border-box;}
+        </style>
+    </head>
+    <body>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Car Deals</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <nav class="mdl-navigation">
+                        <button 
+                        onclick="location.reload()"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                            Refresh
+                        </button>
+                    </nav>
+                </div>
+            </header>
+            <main class="mdl-layout__content">
+                <div id="first-load" class="center">
+                    <svg fill="#f44336" height="300" viewBox="0 0 24 24" width="300" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                    </svg>
+                    <p>Parking your car deals</p>
+                </div>
+                <div id="connection-status" class="center"></div>
+                <div class="mdl-grid">
+                    <!-- Dynamic Data here -->
+                </div>
+                <div class="center">
+                    <button 
+                    onclick="pageEvents.loadMore()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                        Show More
                     </button>
-                </nav>
+                </div>
+            </main>
+        </div>
+        <script id="car-card" type="text/template">
+            <div class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp" 
+                style="background-image: url('{{image}}')"
+                onclick="pageEvents.loadCarPage('{{details-id}}')">
+                <div class="mdl-card__title">
+                    <span class="mdl-card__title-text">{{title}} (${{price}})</span>
+                </div>    
             </div>
-        </header>
-        <main class="mdl-layout__content">
-            <div id="first-load" class="center">
-                <svg fill="#f44336" height="300" viewBox="0 0 24 24" width="300" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-                <p>Parking your car deals</p>
-            </div>
-            <div id="connection-status" class="center"></div>
-            <div class="mdl-grid">
-                <!--Dynamic Data here-->
-            </div>
-            <div class="center">
-                <button 
-                onclick="pageEvents.loadMore()"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                    Show More
-                </button>
-            </div>
-        </main>
-    </div>
-    
-    <script id="car-card" type="text/template">
-      <div class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp" style="background-image: url('{{image}}')"
-      onclick="pageEvents.loadCarPage('{{details-id}}')">
-           <div class="mdl-card__title">
-              <span class="mdl-card__title-text">{{title}} (${{price}})</span>
-          </div>
-      </div>
-    </script>
-    
-    <script src="resources/es6-promise/es6-promise.js"></script>
-    <script src="resources/fetch/fetch.js"></script>
-    <script src="resources/localforage/localforage.min.js"></script>
-    <script src="resources/localforage/localforage-getitems.js"></script>
-    <script src="resources/localforage/localforage-setitems.js"></script>
-    <script src="resources/systemjs/system.js"></script>
+        </script>
 
-    <script>
-        System.import('./js/app.js');
-    </script>
-    
-  </body>
+        <script src="resources/es6-promise/es6-promise.js"></script>
+        <script src="resources/fetch/fetch.js"></script>
+        <script src="resources/localforage/localforage.min.js"></script>
+        <script src="resources/localforage/localforage-getitems.js"></script>
+        <script src="resources/localforage/localforage-setitems.js"></script>
+        <script src="resources/systemjs/system.js"></script>
 
+        <script>
+            System.import('./js/app.js');
+        </script>
+    </body>
 </html>
