@@ -14,7 +14,7 @@ define([], function(){
         document.getElementById('first-load').innerHTML = "";
         var cardHTML = "";
         for(var i = 0; i < cars.length; i++){
-            cardHTML += generateCarCard(cars[i].value);
+            cardHTML += generateCarCard(cars[i]);
         }
         document.querySelector('.mdl-grid').insertAdjacentHTML('beforeend', cardHTML);
         //Force Redraw Fix for IE
