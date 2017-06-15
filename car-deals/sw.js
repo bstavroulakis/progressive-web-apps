@@ -24,8 +24,7 @@ var carDealsCacheFiles = [
   'resources/systemjs/system.js',
   'resources/systemjs/system-polyfills.js',
   'resources/systemjs/system.js.map',
-  'resources/systemjs/system.src.js',
-  'resources/pretty.js'
+  'resources/systemjs/system.src.js'
 ];
 
 var latestPath = '/pluralsight/courses/progressive-web-apps/service/latest-deals.php';
