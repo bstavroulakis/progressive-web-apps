@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#f44336" />
 
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <script
       async
       src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js"
@@ -20,19 +20,11 @@
     ></script>
     <script
       defer
-      src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"
+      src="https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js"
       crossorigin="anonymous"
     ></script>
-    <script
-      defer
-      src="https://unpkg.com/localforage-setitems@1.4.0/dist/localforage-setitems.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      defer
-      src="https://unpkg.com/localforage-getitems@1.4.0/dist/localforage-getitems.js"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="preload" href="swRegister.js" as="script" />
+    <link rel="preload" href="carService.js" as="script" />
   </head>
 
   <body>

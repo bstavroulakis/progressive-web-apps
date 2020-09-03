@@ -1,17 +1,13 @@
 "use strict";
-// v1.2
+// v1.3
 
 var carDealsCacheName = "carDealsCacheV1";
 var carDealsCacheImagesName = "carDealsCacheImagesV1";
 var carDealsCachePagesName = "carDealsCachePagesV1";
 
 var carDealsCacheFiles = [
-  "https://code.getmdl.io/1.3.0/material.red-indigo.min.css",
   "https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js",
-  "https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js",
-  "https://unpkg.com/localforage-setitems@1.4.0/dist/localforage-setitems.js",
-  "https://unpkg.com/localforage-getitems@1.4.0/dist/localforage-getitems.js",
-  "https://code.getmdl.io/1.3.0/material.min.js",
+  "https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js",
   "js/app.js",
   "js/carService.js",
   "js/clientStorage.js",
@@ -19,7 +15,7 @@ var carDealsCacheFiles = [
   "js/template.js",
   "favicon.ico",
   "/",
-  "styles.css",
+  "style.css",
 ];
 
 var latestPath =
