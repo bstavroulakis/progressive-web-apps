@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<!--
+<html lang="en" manifest="local.appcache">
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The best car deals on the web" />
+    <title>Car Deals</title>
+    <meta name="theme-color" content="#f44336" />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/localforage-setitems@1.4.0/dist/localforage-setitems.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/localforage-getitems@1.4.0/dist/localforage-getitems.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      <span>Car Deals v1.1</span>
+      <div></div>
+      <nav>
+        <button onclick="location.reload()">Refresh</button>
+      </nav>
+    </header>
+    <main>
+      <div id="connection-status" class="center"></div>
+      <div id="first-load" class="center">
+        <svg
+          fill="#f44336"
+          height="300"
+          viewBox="0 0 24 24"
+          width="300"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"
+          ></path>
+          <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+        <p>Parking your car deals</p>
+      </div>
+      <div class="mdl-grid">
+        <!--Dynamic Data here-->
+      </div>
+      <div class="center">
+        <button id="show-more" onclick="pageEvents.loadMore()">
+          Show More
+        </button>
+      </div>
+    </main>
+
+    <script id="car-card" type="text/template">
+        <button class="card mdl-cell--4-col" style="background-image: url('${image}')"
+            onclick="pageEvents.loadCarPage('${details_id}')">
+                <div class="card-text">${title} ($${price})</div>
+      </button>
+    </script>
+    <script defer src="./js/app.js" type="module"></script>
+  </body>
+</html>
