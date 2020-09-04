@@ -1,4 +1,5 @@
-const LIMIT = 3;
+import { LIMIT } from "./constants.js";
+
 const carsInstance = localforage.createInstance({
   name: "cars",
 });

@@ -1,23 +1,22 @@
+import { preCacheDetailsPage } from "./carPageService.js";
 import clientStorage from "./clientStorage.js";
-import { API_URL_CAR, API_URL_LATEST } from "./constants.js";
+import { API_URL_LATEST } from "./constants.js";
 import template from "./template.js";
 
-async function loadMoreRequest() {
+export const loadCars = async () => {
   let status = "";
   try {
     status = await fetchPromise();
   } catch {
     status = "No connection, showing offline results";
   }
-
   document.getElementById("connection-status").innerHTML = status;
 
   const cars = await clientStorage.getCars();
-  if (!cars) return;
   template.appendCars(cars);
-}
+};
 
-function fetchPromise() {
+export const fetchPromise = () => {
   const promiseRequest = new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
@@ -38,25 +37,4 @@ function fetchPromise() {
     }, 3000)
   );
   return Promise.race([promiseRequest, promiseHanging]);
-}
-
-async function loadCarPage(carId) {
-  const response = await fetch(`${API_URL_CAR}${carId}`);
-  const responseText = await response.text();
-  document.body.insertAdjacentHTML("beforeend", responseText);
-}
-
-async function preCacheDetailsPage(car) {
-  if (!("serviceWorker" in navigator)) {
-    return;
-  }
-  const carDetailsUrl = API_URL_CAR + car.value.details_id;
-  const cache = await window.caches.open("carDealsCachePagesV1");
-  const response = await cache.match(carDetailsUrl);
-  if (!response) cache.add(new Request(carDetailsUrl));
-}
-
-export default {
-  loadCarPage: loadCarPage,
-  loadMoreRequest: loadMoreRequest,
 };

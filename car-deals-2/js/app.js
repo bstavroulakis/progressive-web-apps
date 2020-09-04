@@ -1,14 +1,15 @@
-import carService from "./carService.js";
+import { loadCarPage } from "./carPageService.js";
+import { loadCars } from "./carService.js";
 import swRegister from "./swRegister.js";
 
 window.pageEvents = {
   loadCarPage: function (carId) {
-    carService.loadCarPage(carId);
+    loadCarPage(carId);
   },
   loadMore: function () {
-    carService.loadMoreRequest();
+    loadCars();
   },
 };
 
-carService.loadMoreRequest();
+loadCars();
 swRegister();
