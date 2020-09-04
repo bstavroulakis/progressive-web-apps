@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-
-<!--
-<html lang="en" manifest="local.appcache">
--->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,26 +6,23 @@
     <meta name="description" content="The best car deals on the web" />
     <title>Car Deals</title>
     <meta name="theme-color" content="#f44336" />
-
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <script
       async
       src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js"
-      crossorigin="anonymous"
     ></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js"
-      crossorigin="anonymous"
     ></script>
-    <link rel="preload" href="swRegister.js" as="script" />
-    <link rel="preload" href="carService.js" as="script" />
+    <script defer src="./js/app.js" type="module"></script>
   </head>
 
   <body>
     <header>
-      <span>Car Deals v1.1</span>
+      <span>Car Deals</span>
       <div></div>
       <nav>
         <button onclick="location.reload()">Refresh</button>
@@ -56,7 +49,7 @@
         <!--Dynamic Data here-->
       </div>
       <div class="center">
-        <button id="show-more" onclick="pageEvents.loadMore()">
+        <button id="show-more" onclick="pageEvents.loadMore()" disabled>
           Show More
         </button>
       </div>
@@ -68,6 +61,5 @@
                 <div class="card-text">${title} ($${price})</div>
       </button>
     </script>
-    <script defer src="./js/app.js" type="module"></script>
   </body>
 </html>

@@ -12,7 +12,7 @@ const getCars = async () => {
   const keys = await carsInstance.keys();
   let index = keys.indexOf(lastItemId);
   if (index === 0) return;
-  index = index === -1 ? keys.length : index;
+  index = index === -1 ? keys.length - 1 : index;
 
   const limitKeys = keys.splice(index - LIMIT, LIMIT);
   const results = await carsInstance.getItems(limitKeys);
