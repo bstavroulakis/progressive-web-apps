@@ -1,26 +1,34 @@
 import clientStorage from "./clientStorage.js";
+import { API_URL_CAR, API_URL_LATEST } from "./constants.js";
 import template from "./template.js";
 
-const API_URL_PATH =
-  "https://bstavroulakis.com/pluralsight/courses/progressive-web-apps/service/";
-const API_URL_LATEST = `${API_URL_PATH}latest-deals.php`;
-const API_URL_CAR = `${API_URL_PATH}car.php?carId=`;
-
 async function loadMoreRequest() {
-  document.getElementById("show-more").disabled = true;
-  const status = await fetchPromise();
+  let status = "";
+  try {
+    status = await fetchPromise();
+  } catch {
+    status = "No connection, showing offline results";
+  }
+
   document.getElementById("connection-status").innerHTML = status;
-  await loadMore();
-  document.getElementById("show-more").disabled = false;
+
+  const cars = await clientStorage.getCars();
+  if (!cars) return;
+  template.appendCars(cars);
 }
 
 function fetchPromise() {
-  const promiseRequest = new Promise(async (resolve) => {
-    const response = await fetch(
-      `${API_URL_LATEST}?carId=${clientStorage.getLastCarId()}`
-    );
-    const data = await response.json();
-    await clientStorage.addCars(data.cars);
+  const promiseRequest = new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        `${API_URL_LATEST}?carId=${clientStorage.getLastCarId()}`
+      );
+      const data = await response.json();
+      await clientStorage.addCars(data.cars);
+      data.cars.forEach(preCacheDetailsPage);
+    } catch {
+      reject();
+    }
     resolve("The connection is OK, showing latest results");
   });
 
@@ -30,12 +38,6 @@ function fetchPromise() {
     }, 3000)
   );
   return Promise.race([promiseRequest, promiseHanging]);
-}
-
-async function loadMore() {
-  const cars = await clientStorage.getCars();
-  if (!cars) return;
-  template.appendCars(cars);
 }
 
 async function loadCarPage(carId) {
