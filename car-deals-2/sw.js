@@ -1,5 +1,5 @@
 "use strict";
-// v1.3
+// v1.4
 
 const carDealsCacheName = "carDealsCacheV1";
 const carDealsCacheImagesName = "carDealsCacheImagesV1";
@@ -9,9 +9,10 @@ const carDealsCacheFiles = [
   "https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js",
   "https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js",
   "js/app.js",
-  "js/carService.js",
   "js/carPageService.js",
+  "js/carService.js",
   "js/clientStorage.js",
+  "js/constants.js",
   "js/swRegister.js",
   "js/template.js",
   "favicon.ico",

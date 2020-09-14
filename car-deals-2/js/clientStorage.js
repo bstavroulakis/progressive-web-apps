@@ -1,13 +1,13 @@
 const carsInstance = localforage.createInstance({
   name: "cars",
 });
-let lastItemId = null;
+export let lastItemId = null;
 
-const addCars = async (newCars) => {
+export const addCars = async (newCars) => {
   await carsInstance.setItems(newCars);
 };
 
-const getCars = async () => {
+export const getCars = async () => {
   // Example: keys = [6,5,4,3,2,1], lastIndexId = null
   const keys = (await carsInstance.keys()).reverse();
   // Find the next index of the last item in view
@@ -27,14 +27,4 @@ const getCars = async () => {
   // Example: lastItemId = 4
   lastItemId = limitKeys[limitKeys.length - 1];
   return resultsArr;
-};
-
-const getLastCarId = () => {
-  return lastItemId;
-};
-
-export default {
-  addCars: addCars,
-  getCars: getCars,
-  getLastCarId: getLastCarId,
 };
