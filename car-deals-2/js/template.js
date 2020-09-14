@@ -11,6 +11,9 @@ function generateCarCard(car) {
 
 function appendCars(cars) {
   document.getElementById("first-load").innerHTML = "";
+  if (!cars) {
+    return;
+  }
   const cardHTML = cars.map((c) => generateCarCard(c)).join("");
   document.querySelector(".mdl-grid").insertAdjacentHTML("beforeend", cardHTML);
 }

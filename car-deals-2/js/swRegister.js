@@ -5,7 +5,7 @@ export default function register() {
   navigator.serviceWorker
     .register("sw.js", { scope: "" })
     .then(function (swRegistration) {
-      var serviceWorker;
+      let serviceWorker;
 
       if (swRegistration.installing) {
         console.log("Resolved at installing:  ", swRegistration);

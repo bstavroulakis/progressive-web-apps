@@ -1,28 +1,28 @@
 "use strict";
 // v1.3
 
-var carDealsCacheName = "carDealsCacheV1";
-var carDealsCacheImagesName = "carDealsCacheImagesV1";
-var carDealsCachePagesName = "carDealsCachePagesV1";
+const carDealsCacheName = "carDealsCacheV1";
+const carDealsCacheImagesName = "carDealsCacheImagesV1";
+const carDealsCachePagesName = "carDealsCachePagesV1";
 
-var carDealsCacheFiles = [
+const carDealsCacheFiles = [
   "https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js",
   "https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js",
   "js/app.js",
   "js/carService.js",
+  "js/carPageService.js",
   "js/clientStorage.js",
   "js/swRegister.js",
   "js/template.js",
   "favicon.ico",
   "/",
+  "index.html",
   "style.css",
 ];
 
-var latestPath =
-  "/pluralsight/courses/progressive-web-apps/service/latest-deals.php";
-var imagePath =
-  "/pluralsight/courses/progressive-web-apps/service/car-image.php";
-var carPath = "/pluralsight/courses/progressive-web-apps/service/car.php";
+const latestPath = "/pluralsight/courses/progressive-web-apps/service/latest-deals.php";
+const imagePath = "/pluralsight/courses/progressive-web-apps/service/car-image.php";
+const carPath = "/pluralsight/courses/progressive-web-apps/service/car.php";
 
 //Installing
 //Pre-cache App Shell
@@ -35,7 +35,7 @@ self.addEventListener("install", function (event) {
     })
   );
 });
-//V2
+
 //Activating
 //Clean up
 self.addEventListener("activate", function (event) {
@@ -43,8 +43,8 @@ self.addEventListener("activate", function (event) {
   self.clients.claim();
   event.waitUntil(
     caches.keys().then(function (cacheKeys) {
-      var deletePromises = [];
-      for (var i = 0; i < cacheKeys.length; i++) {
+      const deletePromises = [];
+      for (let i = 0; i < cacheKeys.length; i++) {
         if (
           cacheKeys[i] != carDealsCacheName &&
           cacheKeys[i] != carDealsCacheImagesName &&
@@ -60,9 +60,9 @@ self.addEventListener("activate", function (event) {
 
 //Event Listeners Once Activated
 self.addEventListener("fetch", function (event) {
-  var requestUrl = new URL(event.request.url);
-  var requestPath = requestUrl.pathname;
-  var fileName = requestPath.substring(requestPath.lastIndexOf("/") + 1);
+  const requestUrl = new URL(event.request.url);
+  const requestPath = requestUrl.pathname;
+  const fileName = requestPath.substring(requestPath.lastIndexOf("/") + 1);
 
   if (requestPath == latestPath || fileName == "sw.js") {
     //Network Only Strategy
@@ -100,8 +100,8 @@ function fetchRequestAndCache(request) {
 }
 
 function getCacheName(request) {
-  var requestUrl = new URL(request.url);
-  var requestPath = requestUrl.pathname;
+  const requestUrl = new URL(request.url);
+  const requestPath = requestUrl.pathname;
 
   if (requestPath == imagePath) {
     return carDealsCacheImagesName;

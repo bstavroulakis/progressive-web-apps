@@ -4,37 +4,33 @@ import { API_URL_LATEST } from "./constants.js";
 import template from "./template.js";
 
 export const loadCars = async () => {
-  let status = "";
-  try {
-    status = await fetchPromise();
-  } catch {
-    status = "No connection, showing offline results";
-  }
-  document.getElementById("connection-status").innerHTML = status;
-
+  // Fetch, update cache and set status
+  document.getElementById("connection-status").innerHTML = await fetchPromise();
+  // Load cars from cache
   const cars = await clientStorage.getCars();
+  // Add cars to HTML
   template.appendCars(cars);
 };
 
 export const fetchPromise = () => {
-  const promiseRequest = new Promise(async (resolve, reject) => {
+  const promiseRequest = new Promise(async (resolve) => {
     try {
-      const response = await fetch(
-        `${API_URL_LATEST}?carId=${clientStorage.getLastCarId()}`
-      );
-      const data = await response.json();
-      await clientStorage.addCars(data.cars);
-      data.cars.forEach(preCacheDetailsPage);
-    } catch {
-      reject();
+      await loadCarsRequest();
+    } catch (err) {
+      resolve("No connection, showing offline results");
     }
     resolve("The connection is OK, showing latest results");
   });
 
   const promiseHanging = new Promise((resolve) =>
-    setTimeout(() => {
-      resolve("The connection is hanging, showing offline results");
-    }, 3000)
+    setTimeout(resolve, 1000, "The connection is hanging, showing offline results")
   );
   return Promise.race([promiseRequest, promiseHanging]);
+};
+
+const loadCarsRequest = async () => {
+  const response = await fetch(`${API_URL_LATEST}?carId=${clientStorage.getLastCarId()}`);
+  const data = await response.json();
+  await clientStorage.addCars(data.cars);
+  data.cars.forEach(preCacheDetailsPage);
 };

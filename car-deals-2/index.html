@@ -54,12 +54,12 @@
         </button>
       </div>
     </main>
-
     <script id="car-card" type="text/template">
-        <button class="card mdl-cell--4-col" style="background-image: url('${image}')"
+        <div class="card mdl-cell--4-col"
+            style="background-image: url('${image}')"
             onclick="pageEvents.loadCarPage('${details_id}')">
                 <div class="card-text">${title} ($${price})</div>
-      </button>
+      </div>
     </script>
   </body>
 </html>
