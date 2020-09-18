@@ -9,7 +9,7 @@ function generateCarCard(car) {
   return template.replace(/\${(.*?)}/g, (x, g) => carDetails[g]);
 }
 
-function appendCars(cars) {
+export function appendCars(cars) {
   document.getElementById("first-load").innerHTML = "";
   if (!cars) {
     return;
@@ -17,7 +17,3 @@ function appendCars(cars) {
   const cardHTML = cars.map((c) => generateCarCard(c)).join("");
   document.querySelector(".mdl-grid").insertAdjacentHTML("beforeend", cardHTML);
 }
-
-export default {
-  appendCars: appendCars,
-};

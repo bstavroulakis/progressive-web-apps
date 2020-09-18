@@ -67,7 +67,7 @@ button {
 .mdl-grid > .mdl-cell--2-col {
   flex-basis: 16.6666666%;
 }
-.mdl-grid > .mdl-cell--4-col {
+.mdl-grid > .card {
   flex-basis: 33.3333333%;
 }
 .mdl-grid > .mdl-cell--6-col {
@@ -77,7 +77,7 @@ button {
   .mdl-grid > .mdl-cell--2-col {
     flex-basis: 100%;
   }
-  .mdl-grid > .mdl-cell--4-col {
+  .mdl-grid > .card {
     flex-basis: 100%;
   }
   .mdl-grid > .mdl-cell--6-col {

@@ -1,7 +1,7 @@
 import { preCacheDetailsPage } from "./carPageService.js";
 import { addCars, getCars, lastItemId } from "./clientStorage.js";
 import { API_URL_LATEST } from "./constants.js";
-import template from "./template.js";
+import { appendCars } from "./template.js";
 
 export const loadCars = async () => {
   // Fetch, update cache and set status
@@ -9,7 +9,7 @@ export const loadCars = async () => {
   // Load cars from cache
   const cars = await getCars();
   // Add cars to HTML
-  template.appendCars(cars);
+  appendCars(cars);
 };
 
 export const fetchPromise = () => {

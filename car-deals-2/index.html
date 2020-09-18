@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="The best car deals on the web" />
     <meta name="theme-color" content="#f44336" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -20,7 +21,7 @@
     <header>
       <span>Car Deals</span>
       <div></div>
-      <nav><button onclick="location.reload()">Refresh</button></nav>
+      <button onclick="location.reload()">Refresh</button>
     </header>
     <main>
       <div id="connection-status" class="center"></div>
@@ -39,7 +40,7 @@
       </div>
     </main>
     <script id="car-card" type="text/template">
-      <div class="card mdl-cell--4-col" style="background-image: url('${image}')" onclick="pageEvents.loadCarPage('${details_id}')">
+      <div class="card" style="background-image: url('${image}')" onclick="pageEvents.loadCarPage('${details_id}')">
         <div class="card-text">${title} ($${price})</div>
       </div>
     </script>
