@@ -19,7 +19,8 @@ button {
 }
 .center {
   text-align: center;
-  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: block;
 }
 .card {
   cursor: pointer;

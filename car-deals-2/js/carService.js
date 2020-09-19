@@ -1,5 +1,5 @@
 import { preCacheDetailsPage } from "./carPageService.js";
-import { addCars, getCars, lastItemId } from "./clientStorage.js";
+import { addCars, getCars, getLastItemId } from "./clientStorage.js";
 import { API_URL_LATEST } from "./constants.js";
 import { appendCars } from "./template.js";
 
@@ -8,7 +8,7 @@ export const loadCars = async () => {
   document.getElementById("connection-status").innerHTML = await fetchPromise();
   // Load cars from cache
   const cars = await getCars();
-  // Add cars to HTML
+  // Append cars to HTML
   appendCars(cars);
 };
 
@@ -29,7 +29,7 @@ export const fetchPromise = () => {
 };
 
 const loadCarsRequest = async () => {
-  const response = await fetch(`${API_URL_LATEST}?carId=${lastItemId}`);
+  const response = await fetch(`${API_URL_LATEST}?carId=${await getLastItemId()}`);
   const data = await response.json();
   await addCars(data.cars);
   data.cars.forEach(preCacheDetailsPage);

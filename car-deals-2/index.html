@@ -35,9 +35,7 @@
         <p>Parking your car deals</p>
       </div>
       <div class="mdl-grid"><!--Dynamic Data here--></div>
-      <div class="center">
-        <button id="show-more" onclick="pageEvents.loadMore()">Show More</button>
-      </div>
+      <button class="center" onclick="pageEvents.loadMore()">Show More</button>
     </main>
     <script id="car-card" type="text/template">
       <div class="card" style="background-image: url('${image}')" onclick="pageEvents.loadCarPage('${details_id}')">
