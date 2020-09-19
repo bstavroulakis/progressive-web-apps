@@ -1,4 +1,4 @@
-export default function register() {
+const register = () => {
   if (!("serviceWorker" in navigator)) {
     return;
   }
@@ -45,4 +45,6 @@ export default function register() {
   navigator.serviceWorker.addEventListener("controllerchange", function (e) {
     console.log("Controller Changed!");
   });
-}
+};
+
+export default register;

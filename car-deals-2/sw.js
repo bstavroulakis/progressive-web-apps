@@ -1,5 +1,5 @@
 "use strict";
-// v0.1.1
+// v0.1.2
 
 const carDealsCacheName = "carDealsCacheV1";
 const carDealsCacheImagesName = "carDealsCacheImagesV1";

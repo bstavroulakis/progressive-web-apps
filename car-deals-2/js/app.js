@@ -3,12 +3,8 @@ import { loadCars } from "./carService.js";
 import swRegister from "./swRegister.js";
 
 window.pageEvents = {
-  loadCarPage: function (carId) {
-    loadCarPage(carId);
-  },
-  loadMore: function () {
-    loadCars();
-  },
+  loadCarPage,
+  loadCars,
 };
 
 loadCars();

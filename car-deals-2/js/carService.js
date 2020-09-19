@@ -15,7 +15,7 @@ export const loadCars = async () => {
 export const fetchPromise = () => {
   const promiseRequest = new Promise(async (resolve) => {
     try {
-      await loadCarsRequest();
+      loadCarsRequest();
     } catch (err) {
       resolve("No connection, showing offline results");
     }
@@ -29,8 +29,11 @@ export const fetchPromise = () => {
 };
 
 const loadCarsRequest = async () => {
-  const response = await fetch(`${API_URL_LATEST}?carId=${await getLastItemId()}`);
+  const requestURL = `${API_URL_LATEST}?carId=${await getLastItemId()}`;
+  const response = await fetch(requestURL);
   const data = await response.json();
+  // cache cars
   await addCars(data.cars);
+  // cache car pages
   data.cars.forEach(preCacheDetailsPage);
 };
