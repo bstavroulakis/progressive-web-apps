@@ -23,7 +23,7 @@ export const fetchPromise = () => {
   });
 
   const promiseHanging = new Promise((resolve) =>
-    setTimeout(resolve, 1000, "The connection is hanging, showing offline results")
+    setTimeout(resolve, 2000, "The connection is hanging, showing offline results")
   );
   return Promise.race([promiseRequest, promiseHanging]);
 };

@@ -19,8 +19,7 @@
   </head>
   <body>
     <header>
-      <span>Car Deals</span>
-      <div></div>
+      <div>Car Deals</div>
       <button onclick="location.reload()">Refresh</button>
     </header>
     <main>
@@ -39,7 +38,7 @@
     </main>
     <script id="car-card" type="text/template">
       <div class="card" style="background-image: url('${image}')" onclick="pageEvents.loadCarPage('${details_id}')">
-        <div class="card-text">${title} ($${price})</div>
+        <div class="card-text">${brand} ${model} ${year} ($${price})</div>
       </div>
     </script>
   </body>

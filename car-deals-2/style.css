@@ -3,10 +3,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 header {
-  background-color: rgb(204 60 60);
+  background-color: rgb(204, 60, 60);
   color: white;
   display: flex;
   padding: 1rem;
+  height: 2rem;
   align-items: center;
 }
 header > div {
@@ -24,21 +25,21 @@ button {
 }
 .card {
   cursor: pointer;
-  height: 250px;
-  width: 100%;
   background-size: cover;
   position: relative;
   border: 0;
+  height: 250px;
+  width: 100%;
 }
 .card-text {
   color: #ffffff;
   background-color: rgba(0, 0, 0, 1);
   padding: 1rem;
   position: absolute;
+  box-sizing: border-box;
   left: 0;
   bottom: 0;
   width: 100%;
-  box-sizing: border-box;
 }
 .car-details-info > b {
   padding-right: 0.5rem;
