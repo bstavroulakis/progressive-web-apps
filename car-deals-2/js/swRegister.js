@@ -16,12 +16,12 @@ export default async () => {
     serviceWorker = swRegistration.active;
   }
 
-  serviceWorker.addEventListener("statechange", function (e) {
+  serviceWorker.addEventListener("statechange", (e) => {
     console.log(e.target.state);
   });
 
-  swRegistration.addEventListener("updatefound", function (e) {
-    swRegistration.installing.addEventListener("statechange", function (e) {
+  swRegistration.addEventListener("updatefound", () => {
+    swRegistration.installing.addEventListener("statechange", (e) => {
       console.log("New service worker state: ", e.target.state);
     });
     console.log("New service worker found!", swRegistration);
@@ -29,12 +29,12 @@ export default async () => {
 
   //An extra event that is fired when the service worker controlling this page changes
   //through the self.skipWaiting()
-  navigator.serviceWorker.addEventListener("controllerchange", function (e) {
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
     console.log("Controller Changed!");
   });
 
   //Check for an update every hour
-  setInterval(function () {
+  setInterval(() => {
     swRegistration.update();
   }, 1000 * 60 * 60);
 };

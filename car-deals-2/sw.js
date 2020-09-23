@@ -4,6 +4,7 @@
 const carDealsCacheName = "carDealsCacheV1";
 const carDealsCacheImagesName = "carDealsCacheImagesV1";
 const carDealsCachePagesName = "carDealsCachePagesV1";
+const carDealsCache = [carDealsCacheName, carDealsCacheImagesName, carDealsCachePagesName];
 
 const carDealsCacheFiles = [
   "https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js",
@@ -27,80 +28,79 @@ const carPath = "/pluralsight/courses/progressive-web-apps/service/car.php";
 
 //Installing
 //Pre-cache App Shell
-self.addEventListener("install", function (event) {
+self.addEventListener("install", (event) => {
   console.log("From SW: Install Event");
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(carDealsCacheName).then(function (cache) {
-      return cache.addAll(carDealsCacheFiles);
-    })
-  );
+  const preCache = async () => {
+    const cache = await caches.open(carDealsCacheName);
+    return cache.addAll(carDealsCacheFiles);
+  };
+  event.waitUntil(preCache());
 });
 
 //Activating
 //Clean up
-self.addEventListener("activate", function (event) {
+self.addEventListener("activate", (event) => {
   console.log("From SW: Activate Event");
   self.clients.claim();
-  event.waitUntil(
-    caches.keys().then(function (cacheKeys) {
-      const deletePromises = [];
-      for (let i = 0; i < cacheKeys.length; i++) {
-        if (
-          cacheKeys[i] != carDealsCacheName &&
-          cacheKeys[i] != carDealsCacheImagesName &&
-          cacheKeys[i] != carDealsCachePagesName
-        ) {
-          deletePromises.push(caches.delete(cacheKeys[i]));
-        }
-      }
-      return Promise.all(deletePromises);
-    })
-  );
+  const clearCache = async () => {
+    const cacheKeys = await caches.keys();
+    const deletePromises = cacheKeys
+      .filter((c) => {
+        return !carDealsCache.includes(c);
+      })
+      .map((c) => {
+        caches.delete(c);
+      });
+    return Promise.all(deletePromises);
+  };
+  event.waitUntil(clearCache());
 });
 
 //Event Listeners Once Activated
-self.addEventListener("fetch", function (event) {
+self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
   const requestPath = requestUrl.pathname;
   const fileName = requestPath.substring(requestPath.lastIndexOf("/") + 1);
 
-  if (requestPath == latestPath || fileName == "sw.js") {
-    //Network Only Strategy
-    event.respondWith(fetch(event.request));
-  } else if (requestPath == imagePath) {
-    //Network First then Offline Strategy
-    event.respondWith(networkFirstStrategy(event.request));
-  } else {
+  const getReponse = async () => {
+    if (requestPath == latestPath || fileName == "sw.js") {
+      //Network Only Strategy
+      return fetch(event.request);
+    } else if (requestPath == imagePath) {
+      //Network First then Offline Strategy
+      return await networkFirstStrategy(event.request);
+    }
     //Offline First then Network Strategy
-    event.respondWith(cacheFirstStrategy(event.request));
-  }
+    return await cacheFirstStrategy(event.request);
+  };
+  event.respondWith(getReponse());
 });
 
 //Caching Strategies
-function cacheFirstStrategy(request) {
-  return caches.match(request).then(function (cacheResponse) {
-    return cacheResponse || fetchRequestAndCache(request);
-  });
-}
+const cacheFirstStrategy = async (request) => {
+  const cacheResponse = await caches.match(request);
+  return cacheResponse || fetchRequestAndCache(request);
+};
 
-function networkFirstStrategy(request) {
-  return fetchRequestAndCache(request).catch(function (response) {
-    return caches.match(request);
-  });
-}
+const networkFirstStrategy = async (request) => {
+  try {
+    return await fetchRequestAndCache(request);
+  } catch {
+    return await caches.match(request);
+  }
+};
 
 //Fetch Request And Cache
-function fetchRequestAndCache(request) {
-  return fetch(request).then(function (networkResponse) {
-    caches.open(getCacheName(request)).then(function (cache) {
-      cache.put(request, networkResponse);
-    });
-    return networkResponse.clone();
-  });
-}
+const fetchRequestAndCache = async (request) => {
+  const networkResponse = await fetch(request);
+  const clonedResponse = networkResponse.clone();
+  const cache = await caches.open(getCacheName(request));
+  cache.put(request, networkResponse);
+  return clonedResponse;
+};
 
-function getCacheName(request) {
+const getCacheName = (request) => {
   const requestUrl = new URL(request.url);
   const requestPath = requestUrl.pathname;
 
@@ -111,4 +111,4 @@ function getCacheName(request) {
   } else {
     return carDealsCacheName;
   }
-}
+};
