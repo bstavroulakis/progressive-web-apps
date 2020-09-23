@@ -12,10 +12,10 @@ export const loadCars = async () => {
   appendCars(cars);
 };
 
-export const fetchPromise = () => {
+const fetchPromise = () => {
   const promiseRequest = new Promise(async (resolve) => {
     try {
-      loadCarsRequest();
+      await loadCarsRequest();
     } catch (err) {
       resolve("No connection, showing offline results");
     }
@@ -23,7 +23,7 @@ export const fetchPromise = () => {
   });
 
   const promiseHanging = new Promise((resolve) =>
-    setTimeout(resolve, 2000, "The connection is hanging, showing offline results")
+    setTimeout(resolve, 3000, "The connection is hanging, showing offline results")
   );
   return Promise.race([promiseRequest, promiseHanging]);
 };
@@ -32,8 +32,6 @@ const loadCarsRequest = async () => {
   const requestURL = `${API_URL_LATEST}?carId=${await getLastItemId()}`;
   const response = await fetch(requestURL);
   const data = await response.json();
-  // cache cars
   await addCars(data.cars);
-  // cache car pages
   data.cars.forEach(preCacheDetailsPage);
 };

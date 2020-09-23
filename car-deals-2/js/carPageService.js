@@ -7,9 +7,6 @@ export const loadCarPage = async (carId) => {
 };
 
 export const preCacheDetailsPage = async (car) => {
-  if (!("serviceWorker" in navigator)) {
-    return;
-  }
   const carDetailsUrl = `${API_URL_CAR}${car.value.details_id}`;
   const cache = await window.caches.open("carDealsCachePagesV1");
   const response = await cache.match(carDetailsUrl);
