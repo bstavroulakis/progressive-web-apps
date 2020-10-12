@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/gh/bstavroulakis/progressive-web-apps/resources/localforage.js"
+    ></script>
     <script defer src="./js/app.js" type="module"></script>
   </head>
   <body>
@@ -12,12 +16,13 @@
       <button onclick="location.reload()">Refresh</button>
     </header>
     <main>
+      <div id="connection-status" class="center"></div>
       <div id="first-load" class="center">
         <img width="300" height="300" src="logo.svg" />
         <p>Parking your car deals</p>
       </div>
       <div class="mdl-grid"><!--Dynamic Data here--></div>
-      <button class="center">Show More</button>
+      <button class="center" onclick="pageEvents.loadCars()">Show More</button>
     </main>
     <script id="car-card" type="text/template">
       <div class="card" style="background-image: url('${image}')"
